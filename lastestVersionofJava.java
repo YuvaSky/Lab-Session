@@ -10,6 +10,5 @@ class lastestVersionofJava {
 	public static void main(String[]args) {
 		System.out.println("java Version is:"+System.getProperty("java.version"));
 	}
-
 	}
 
