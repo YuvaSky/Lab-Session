@@ -1,0 +1,191 @@
+/* Write to a program to preform ALL JOIN  database in sql
+Name : Sumit Yadav
+Date : 10-11-2022
+*/
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 22
+Server version: 8.0.31 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use sportdb;
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_sportdb |
++-------------------+
+| cricket           |
+| football          |
++-------------------+
+2 rows in set (0.00 sec)
+
+mysql> desc cricket;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| c_id           | int         | NO   | PRI | NULL    |       |
+| c_name         | varchar(20) | NO   |     | NULL    |       |
+| equipment_name | varchar(20) | NO   |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc football;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| f_id      | int         | NO   | PRI | NULL    |       |
+| f_name    | varchar(20) | NO   |     | NULL    |       |
+| equipment | varchar(20) | NO   |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from cricket;
++------+--------+----------------+
+| c_id | c_name | equipment_name |
++------+--------+----------------+
+|    1 | virat  | bat            |
+|    2 | rohit  | bat            |
+|    3 | sky    | bat            |
+|    4 | rahul  | bat            |
+|    5 | hardik | bat            |
++------+--------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from football;
++------+---------+-----------+
+| f_id | f_name  | equipment |
++------+---------+-----------+
+|    1 | sunil   | football  |
+|    2 | messy   | football  |
+|    3 | ronaldo | football  |
++------+---------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select football.f_name,football.equipment,cricket.c_name,cricket.equipment_name
+    -> from football
+    -> INNER JOIN cricket
+    -> ON football.f_id=cricket.c_id;
++---------+-----------+--------+----------------+
+| f_name  | equipment | c_name | equipment_name |
++---------+-----------+--------+----------------+
+| sunil   | football  | virat  | bat            |
+| messy   | football  | rohit  | bat            |
+| ronaldo | football  | sky    | bat            |
++---------+-----------+--------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> select football.f_name,cricket.c_name
+    -> from football
+    -> LEFT JOIN cricket
+    -> ON football.f_id=cricket.c_id;
++---------+--------+
+| f_name  | c_name |
++---------+--------+
+| sunil   | virat  |
+| messy   | rohit  |
+| ronaldo | sky    |
++---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select football.equipment,cricket.equipment_name
+    -> from football
+    -> RIGHT JOIN cricket
+    -> ON football.f_id=cricket.c_id;
++-----------+----------------+
+| equipment | equipment_name |
++-----------+----------------+
+| football  | bat            |
+| football  | bat            |
+| football  | bat            |
+| NULL      | bat            |
+| NULL      | bat            |
++-----------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from cricket;
++------+--------+----------------+
+| c_id | c_name | equipment_name |
++------+--------+----------------+
+|    1 | virat  | bat            |
+|    2 | rohit  | bat            |
+|    3 | sky    | bat            |
+|    4 | rahul  | bat            |
+|    5 | hardik | bat            |
++------+--------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> select football.equipment,cricket.equipment_name
+    -> from football
+    -> RIGHT JOIN cricket
+    -> ON football.f_id=cricket.c_id;
++-----------+----------------+
+| equipment | equipment_name |
++-----------+----------------+
+| football  | bat            |
+| football  | bat            |
+| football  | bat            |
+| NULL      | bat            |
+| NULL      | bat            |
++-----------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from football;
++------+---------+-----------+
+| f_id | f_name  | equipment |
++------+---------+-----------+
+|    1 | sunil   | football  |
+|    2 | messy   | football  |
+|    3 | ronaldo | football  |
++------+---------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from football full join cricket;
++------+---------+-----------+------+--------+----------------+
+| f_id | f_name  | equipment | c_id | c_name | equipment_name |
++------+---------+-----------+------+--------+----------------+
+|    3 | ronaldo | football  |    1 | virat  | bat            |
+|    2 | messy   | football  |    1 | virat  | bat            |
+|    1 | sunil   | football  |    1 | virat  | bat            |
+|    3 | ronaldo | football  |    2 | rohit  | bat            |
+|    2 | messy   | football  |    2 | rohit  | bat            |
+|    1 | sunil   | football  |    2 | rohit  | bat            |
+|    3 | ronaldo | football  |    3 | sky    | bat            |
+|    2 | messy   | football  |    3 | sky    | bat            |
+|    1 | sunil   | football  |    3 | sky    | bat            |
+|    3 | ronaldo | football  |    4 | rahul  | bat            |
+|    2 | messy   | football  |    4 | rahul  | bat            |
+|    1 | sunil   | football  |    4 | rahul  | bat            |
+|    3 | ronaldo | football  |    5 | hardik | bat            |
+|    2 | messy   | football  |    5 | hardik | bat            |
+|    1 | sunil   | football  |    5 | hardik | bat            |
++------+---------+-----------+------+--------+----------------+
+15 rows in set (0.00 sec)
+
+mysql> select * from football cross join cricket;
++------+---------+-----------+------+--------+----------------+
+| f_id | f_name  | equipment | c_id | c_name | equipment_name |
++------+---------+-----------+------+--------+----------------+
+|    3 | ronaldo | football  |    1 | virat  | bat            |
+|    2 | messy   | football  |    1 | virat  | bat            |
+|    1 | sunil   | football  |    1 | virat  | bat            |
+|    3 | ronaldo | football  |    2 | rohit  | bat            |
+|    2 | messy   | football  |    2 | rohit  | bat            |
+|    1 | sunil   | football  |    2 | rohit  | bat            |
+|    3 | ronaldo | football  |    3 | sky    | bat            |
+|    2 | messy   | football  |    3 | sky    | bat            |
+|    1 | sunil   | football  |    3 | sky    | bat            |
+|    3 | ronaldo | football  |    4 | rahul  | bat            |
+|    2 | messy   | football  |    4 | rahul  | bat            |
+|    1 | sunil   | football  |    4 | rahul  | bat            |
+|    3 | ronaldo | football  |    5 | hardik | bat            |
+|    2 | messy   | football  |    5 | hardik | bat            |
+|    1 | sunil   | football  |    5 | hardik | bat            |
++------+---------+-----------+------+--------+----------------+
+15 rows in set (0.00 sec)
